@@ -3,12 +3,25 @@ import Phil from "./structures/Client";
 import SubCommand from "./structures/SubCommand";
 
 export type Config = {
-  sandbox_server_id: string;
+  server_id: string;
   prefix: string;
   channels: {
     logs: string;
+    roles: string;
+    welcome: string;
   }
+  reaction_roles: {
+    group: string;
+    roles: ReactionRole[]
+  }[]
 };
+
+export type ReactionRole = {
+  id: string;
+  name: string;
+  emoji?: string;
+  href?: string;
+}
 
 export type O<T = any> = {
   [key: string]: T;

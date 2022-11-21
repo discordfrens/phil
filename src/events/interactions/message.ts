@@ -1,10 +1,11 @@
 import { client } from "../..";
+import { CONFIG } from "../../constants";
 import Event from "../../structures/Event";
-import { getConfig, permissionHandler } from "../../utils/utils";
+import {  permissionHandler } from "../../utils/utils";
 
 export default new Event("messageCreate", async (message) => {
   if (!message.author || !message.guild || message.author.bot) return;
-  const data = await getConfig(message.guild.id);
+  const data = CONFIG
   if (!message.content.toLowerCase().startsWith(data.prefix)) return;
   const [command_name, ...args] = message.content
     .slice(data.prefix.length)
