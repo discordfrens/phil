@@ -9,7 +9,7 @@ import { CONFIG, INTENTS, logEmbed, PARTIALS } from "../constants";
 import { CommandProperties, Config } from "../types";
 import mongoose from "mongoose";
 import logger from "../utils/logger";
-import { getConfig, globPromise } from "../utils/utils";
+import { globPromise } from "../utils/utils";
 import Event from "./Event";
 
 export default class Phil extends Client {
@@ -63,18 +63,5 @@ export default class Phil extends Client {
       this.on(file.name, file.main);
     });
     return;
-  }
-
-  public async sendLog(guildId: string, data: EmbedData) {
-    const guild = this.guilds.cache.find((f) => f.id === guildId);
-    if (!guild) return;
-    const config = await getConfig(guild.id);
-    const logChannel = guild.channels.cache.find(
-      (f) => f.id === config.channels.logs
-    ) as TextChannel;
-    if (!logChannel) return;
-    return logChannel.send({
-      embeds: [logEmbed(data)],
-    });
   }
 }
