@@ -19,8 +19,17 @@ exports.default = new Event_1.default('messageCreate', async (message) => {
             author: message.author.id,
             author_avatar: message.author.displayAvatarURL(),
             author_name: message.author.username,
+            message_id: message.id,
             content: message.content,
-            media: message.attachments.map(a => a.url)
+            media: message.attachments.map(a => {
+                return {
+                    url: a.url,
+                    type: a.contentType,
+                    size: a.size,
+                    height: a.height,
+                    width: a.width,
+                };
+            })
         });
         if (error)
             return message.reply("```" + error.message + "```");

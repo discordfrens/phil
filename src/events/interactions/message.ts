@@ -4,6 +4,7 @@ import Event from '../../structures/Event'
 import { permissionHandler } from '../../utils/utils'
 
 import { createClient } from '@supabase/supabase-js'
+import { url } from 'inspector'
 
 const supabase = createClient(
     process.env['Supabase_URL'], 
@@ -20,8 +21,17 @@ export default new Event('messageCreate', async (message) => {
                 author: message.author.id,
                 author_avatar: message.author.displayAvatarURL(),
                 author_name: message.author.username,
+                message_id: message.id,
                 content: message.content,
-                media: message.attachments.map(a => a.url)
+                media: message.attachments.map(a => {
+                    return {
+                        url: a.url,
+                        type: a.contentType,
+                        size: a.size,
+                        height: a.height,
+                        width: a.width,
+                    }
+                })
             })
             
         if (error) return message.reply("```" + error.message + "```");
