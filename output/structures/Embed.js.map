@@ -1,1 +1,0 @@
-{"version":3,"file":"Embed.js","sourceRoot":"","sources":["../../src/structures/Embed.ts"],"names":[],"mappings":";;AAAA,2CAKmB;AACnB,4CAAqC;AAErC,MAAqB,SAAS;IAC1B,YAAY,IAAe;QACvB,OAAO,IAAI,yBAAY,CAAC;YACpB,KAAK,EAAE,IAAI,CAAC,KAAK,IAAI,kBAAM,CAAC,GAAG,CAAC,MAAM;YACtC,GAAG,IAAI;SACV,CAAC,CAAA;IACN,CAAC;CACJ;AAPD,4BAOC"}
