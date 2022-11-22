@@ -11,7 +11,7 @@ exports.default = new Event_1.default('ready', () => {
     (0, logger_1.default)(`Client is now online, ${__1.client.user?.tag}`).info();
     __1.client.user?.setActivity({
         type: discord_js_1.ActivityType.Listening,
-        name: `children cry :3`,
+        name: `#scrapbook`,
     });
 });
 //# sourceMappingURL=ready.js.map

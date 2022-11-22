@@ -1,12 +1,8 @@
 // Reaction Roles - Saige
-
-import { de, gu } from 'date-fns/locale'
 import {
     ActionRowBuilder,
     ButtonBuilder,
-    ButtonInteraction,
     ButtonStyle,
-    CacheType,
     Interaction,
     Message,
     MessageCreateOptions,
@@ -14,7 +10,8 @@ import {
     TextChannel,
 } from 'discord.js'
 import { client } from '..'
-import { CONFIG } from '../constants'
+import { COLORS, CONFIG } from '../constants'
+import PhilEmbed from '../structures/Embed'
 export const sendEmbeds = (ctx: Message) => {
     const rolesChannel = ctx.guild.channels.cache.find(
         (f) => f.id === CONFIG.channels.roles
@@ -23,9 +20,18 @@ export const sendEmbeds = (ctx: Message) => {
     const msgs: MessageCreateOptions[] = []
     CONFIG.reaction_roles.forEach((z) => {
         msgs.push({
-            content: `• **${z.group}**\n>>> ${z.roles
-                .map((r) => `${r.name} — <@&${r.id}>`)
-                .join('\n')}`,
+            embeds: [
+                new PhilEmbed({
+                    title: z.group,
+                    description: `${z.roles
+                        .map((r) => `${r.name} — <@&${r.id}>`)
+                        .join('\n')}`,
+                    image: {
+                        url: z.banner
+                    },
+                    color: z.color
+                }),
+            ],
             components: [
                 new ActionRowBuilder<ButtonBuilder | SelectMenuBuilder>({
                     components:

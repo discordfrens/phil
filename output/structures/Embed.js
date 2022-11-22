@@ -5,7 +5,7 @@ const constants_1 = require("../constants");
 class PhilEmbed {
     constructor(data) {
         return new discord_js_1.EmbedBuilder({
-            color: data.color || constants_1.COLOR.resolved,
+            color: data.color || constants_1.COLORS.all.purple,
             ...data,
         });
     }

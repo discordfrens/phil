@@ -25,22 +25,32 @@ export const INTENTS = Object.keys(IntentsBitField.Flags)
 export const LINK_REGEXP =
     /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/
 
-export const COLOR = {
-    raw: '#f43f5e',
-    resolved: resolveColor('#f43f5e'),
+export const COLORS = {
+    all: {
+        purple: resolveColor('#7d53de'),
+        pink: resolveColor('#ef709d'),
+        blue: resolveColor('#3772ff'),
+    },
 }
-
+export const ruleBanner = `https://cdn.discordapp.com/attachments/1039957808247996448/1044704912996565022/Rules.png`
 export const CONFIG: Config = {
     server_id: '901881139004862554',
-    prefix: 'f?',
+    prefix: '>',
+    roles: {
+        muted: '1044748632399806534',
+    },
     channels: {
         logs: '',
         roles: '1044393639373180989',
         welcome: '1044393639373180989',
+        rules: '1044393639373180989',
+        scrapbook: '1044678272434319400',
     },
     reaction_roles: [
         {
             group: 'Colours',
+            color: COLORS.all.pink,
+            banner: `https://cdn.discordapp.com/attachments/1039957808247996448/1044657003949215794/Colours.png`,
             roles: [
                 {
                     emoji: '🌸',
@@ -57,6 +67,8 @@ export const CONFIG: Config = {
         },
         {
             group: 'Region',
+            color: COLORS.all.purple,
+            banner: `https://cdn.discordapp.com/attachments/1039957808247996448/1044656624104644618/Regions.png`,
             roles: [
                 { id: '1044410387682045982', name: 'North America' },
                 { id: '1044410405344260167', name: 'Blurple' },
@@ -69,8 +81,19 @@ export const CONFIG: Config = {
     ],
 }
 
-export const formatShortDate = () => {
-    const _date = new Date(Date.now())
+export const Rules = [
+    'Keep all content (messages, images, videos etc) SFW',
+    'English only',
+    'Hate Speach, Harrassment, Discrimination is prohibited',
+    'Use common sense',
+    'No discussions of politics, religions, self harm, gore, suggestions of death or torture, or any controversial topics',
+    'Discord usernames must be searchable/mentionable ( no special symbols etc )',
+    'No advertising of third-party services, including referral schemes',
+    'No discussions of hacking/cheating',
+]
+
+export const formatShortDate = (date?: number) => {
+    const _date = new Date(date || Date.now())
 
     return format(_date, 'dd/MM/yyyy')
 }

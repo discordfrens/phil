@@ -7,6 +7,6 @@ export default new Event('ready', () => {
     logger(`Client is now online, ${client.user?.tag}`).info()
     client.user?.setActivity({
         type: ActivityType.Listening,
-        name: `children cry :3`,
+        name: `#scrapbook`,
     })
 })

@@ -4,8 +4,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Event_1 = __importDefault(require("../../structures/Event"));
-const rr_1 = require("../../utils/rr");
+const reactionRole_1 = require("../../handlers/reactionRole");
+const __1 = require("../..");
 exports.default = new Event_1.default('interactionCreate', (int) => {
-    (0, rr_1.handleInteraction)(int);
+    if (int.isCommand()) {
+        const commandName = int.commandName;
+        const command = __1.client.slashCommands.find(f => f.name.toLowerCase() === commandName.toLowerCase());
+        if (!command)
+            return;
+        int.member = int.guild.members.cache.find(f => f.id === int.user.id);
+        command.main({
+            args: int.options,
+            client: __1.client,
+            ctx: int
+        });
+    }
+    (0, reactionRole_1.handleInteraction)(int);
 });
 //# sourceMappingURL=interaction.js.map

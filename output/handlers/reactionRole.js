@@ -1,10 +1,14 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handleInteraction = exports.sendEmbeds = void 0;
 // Reaction Roles - Saige
 const discord_js_1 = require("discord.js");
 const __1 = require("..");
 const constants_1 = require("../constants");
+const Embed_1 = __importDefault(require("../structures/Embed"));
 const sendEmbeds = (ctx) => {
     const rolesChannel = ctx.guild.channels.cache.find((f) => f.id === constants_1.CONFIG.channels.roles);
     if (!rolesChannel)
@@ -12,9 +16,18 @@ const sendEmbeds = (ctx) => {
     const msgs = [];
     constants_1.CONFIG.reaction_roles.forEach((z) => {
         msgs.push({
-            content: `• **${z.group}**\n>>> ${z.roles
-                .map((r) => `${r.name} — <@&${r.id}>`)
-                .join('\n')}`,
+            embeds: [
+                new Embed_1.default({
+                    title: z.group,
+                    description: `${z.roles
+                        .map((r) => `${r.name} — <@&${r.id}>`)
+                        .join('\n')}`,
+                    image: {
+                        url: z.banner
+                    },
+                    color: z.color
+                }),
+            ],
             components: [
                 new discord_js_1.ActionRowBuilder({
                     components: z.roles.length < 5
@@ -130,4 +143,4 @@ const handleInteraction = (ctx) => {
     }
 };
 exports.handleInteraction = handleInteraction;
-//# sourceMappingURL=rr.js.map
+//# sourceMappingURL=reactionRole.js.map

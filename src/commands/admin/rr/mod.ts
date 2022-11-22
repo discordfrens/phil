@@ -1,5 +1,5 @@
 import Command from '../../../structures/Command'
-import { sendEmbeds } from '../../../utils/rr'
+import { sendEmbeds } from '../../../handlers/reactionRole'
 
 export default new Command({
     name: 'rr',

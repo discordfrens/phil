@@ -22,12 +22,17 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const constants_1 = require("../constants");
+const logger_1 = __importDefault(require("../utils/logger"));
 const utils_1 = require("../utils/utils");
 class Phil extends discord_js_1.Client {
     commands = new discord_js_1.Collection();
+    slashCommands = new discord_js_1.Collection();
     config = constants_1.CONFIG;
     constructor() {
         super({
@@ -60,13 +65,30 @@ class Phil extends discord_js_1.Client {
 */
     async handler() {
         const commands = await (0, utils_1.globPromise)(`${__dirname}/../commands/**/**/mod{.js,.ts}`);
+        const slashCommands = await (0, utils_1.globPromise)(`${__dirname}/../slashCommands/**/*{.js,.ts}`);
         const events = await (0, utils_1.globPromise)(`${__dirname}/../events/**/*{.ts,.js}`);
+        const rawSlashCommands = [];
         commands.forEach(async (filePath) => {
             var _a;
             const file = await (await (_a = filePath, Promise.resolve().then(() => __importStar(require(_a)))))?.default;
             if (!file || !file.name)
                 return;
             this.commands.set(file.name, file);
+        });
+        slashCommands.forEach(async (filePath) => {
+            var _a;
+            const sc = await (await (_a = filePath, Promise.resolve().then(() => __importStar(require(_a)))))?.default;
+            if (!sc || !sc.name)
+                return;
+            this.slashCommands.set(sc.name, sc);
+            rawSlashCommands.push(sc);
+        });
+        this.on("ready", () => {
+            const guild = this.guilds.cache.find(f => f.id === constants_1.CONFIG.server_id);
+            if (!guild)
+                (0, logger_1.default)(`Failed to locate frens server`).error(true);
+            guild.commands.set(rawSlashCommands);
+            (0, logger_1.default)(`Set commands for ${guild.name} (${guild.id})`).info();
         });
         events.forEach(async (filePath) => {
             var _a;

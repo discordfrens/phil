@@ -4,14 +4,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Command_1 = __importDefault(require("../../../structures/Command"));
-const reactionRole_1 = require("../../../handlers/reactionRole");
+const embeds_1 = require("../../../handlers/embeds");
 exports.default = new Command_1.default({
-    name: 'rr',
+    name: 'embeds',
     userPermissions: ['ManageGuild'],
     category: 'admin',
-    description: `Send out the reaction roles! :nerd:`,
-    main: ({ args, client, config, ctx, flags, subCommands }) => {
-        (0, reactionRole_1.sendEmbeds)(ctx);
+    description: `Send out the general embeds! :nerd:`,
+    main: (props) => {
+        (0, embeds_1.ruleEmbeds)(props.ctx);
+        props.client.commands.get("rr").main(props);
     },
 });
 //# sourceMappingURL=mod.js.map
