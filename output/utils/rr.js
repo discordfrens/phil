@@ -14,27 +14,32 @@ const sendEmbeds = (ctx) => {
         msgs.push({
             content: `• **${z.group}**\n>>> ${z.roles
                 .map((r) => `${r.name} — <@&${r.id}>`)
-                .join("\n")}`,
+                .join('\n')}`,
             components: [
                 new discord_js_1.ActionRowBuilder({
                     components: z.roles.length < 5
                         ? z.roles.map((r) => {
                             const obj = {
                                 label: r.name,
-                                style: r.href ? discord_js_1.ButtonStyle.Link : discord_js_1.ButtonStyle.Primary,
+                                style: r.href
+                                    ? discord_js_1.ButtonStyle.Link
+                                    : discord_js_1.ButtonStyle.Primary,
                             };
                             if (r.href) {
-                                obj["url"] = r.href;
+                                obj['url'] = r.href;
                             }
                             else {
-                                obj["custom_id"] = r.id;
+                                obj['custom_id'] = r.id;
                             }
                             return new discord_js_1.ButtonBuilder(obj);
                         })
                         : [
                             new discord_js_1.SelectMenuBuilder({
-                                custom_id: z.group.toLowerCase().split(" ").join("-"),
-                                placeholder: "Select one of the following...",
+                                custom_id: z.group
+                                    .toLowerCase()
+                                    .split(' ')
+                                    .join('-'),
+                                placeholder: 'Select one of the following...',
                                 min_values: 0,
                                 max_values: z.roles.length,
                                 options: z.roles.map((r) => {
@@ -43,7 +48,7 @@ const sendEmbeds = (ctx) => {
                                         value: `rr_${r.id}`,
                                     };
                                     if (r.emoji) {
-                                        o["emoji"] = r.emoji;
+                                        o['emoji'] = r.emoji;
                                     }
                                     return o;
                                 }),
@@ -95,8 +100,8 @@ const handleInteraction = (ctx) => {
     }
     if (ctx.isSelectMenu()) {
         const ids = ctx.values
-            .filter((f) => f.startsWith("rr_"))
-            .map((z) => z.replace("rr_", ""));
+            .filter((f) => f.startsWith('rr_'))
+            .map((z) => z.replace('rr_', ''));
         const guild = __1.client.guilds.cache.find((f) => f.id === constants_1.CONFIG.server_id);
         if (!guild)
             return;
@@ -111,15 +116,16 @@ const handleInteraction = (ctx) => {
             if (!ids.includes(role.id) && member.roles.cache.has(role.id)) {
                 member.roles.remove(role);
             }
-            else if (ids.includes(role.id) && !member.roles.cache.has(role.id)) {
+            else if (ids.includes(role.id) &&
+                !member.roles.cache.has(role.id)) {
                 member.roles.add(role);
             }
         });
         ctx.reply({
             ephemeral: true,
             content: `Selected For **${rr.group}**\n${ids.length > 0
-                ? ids.map((er) => `<@&${er}>`).join("\n")
-                : "*No roles selected*"}`,
+                ? ids.map((er) => `<@&${er}>`).join('\n')
+                : '*No roles selected*'}`,
         });
     }
 };

@@ -6,7 +6,7 @@ class PhilEmbed {
     constructor(data) {
         return new discord_js_1.EmbedBuilder({
             color: data.color || constants_1.COLOR.resolved,
-            ...data
+            ...data,
         });
     }
 }

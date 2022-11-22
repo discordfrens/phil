@@ -7,7 +7,7 @@ const __1 = require("../..");
 const constants_1 = require("../../constants");
 const Event_1 = __importDefault(require("../../structures/Event"));
 const utils_1 = require("../../utils/utils");
-exports.default = new Event_1.default("messageCreate", async (message) => {
+exports.default = new Event_1.default('messageCreate', async (message) => {
     if (!message.author || !message.guild || message.author.bot)
         return;
     const data = constants_1.CONFIG;
@@ -35,7 +35,7 @@ exports.default = new Event_1.default("messageCreate", async (message) => {
         client: __1.client,
         ctx: message,
         flags: {},
-        config: data
+        config: data,
     };
     if (command.subCommands && command.subCommands.length > 0) {
         const subCommand_name = args[0];
@@ -43,7 +43,7 @@ exports.default = new Event_1.default("messageCreate", async (message) => {
         if (!subCommand)
             return command.main({
                 subCommands: command.subCommands ? command.subCommands : null,
-                ...props
+                ...props,
             });
         if (subCommand.botPermissions) {
             if (!(0, utils_1.permissionHandler)(command.botPermissions).bot(message.guild.members.cache.find((f) => f.id === __1.client.user.id)))
@@ -53,13 +53,13 @@ exports.default = new Event_1.default("messageCreate", async (message) => {
             if (!(0, utils_1.permissionHandler)(command.botPermissions).user(message.guild.members.cache.find((f) => f.id === message.author.id)))
                 return;
         }
-        props["args"] = args.slice(1);
+        props['args'] = args.slice(1);
         subCommand.main(props);
     }
     else {
         command.main({
             subCommands: command.subCommands ? command.subCommands : null,
-            ...props
+            ...props,
         });
     }
 });

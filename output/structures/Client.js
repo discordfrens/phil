@@ -22,14 +22,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const constants_1 = require("../constants");
-const mongoose_1 = __importDefault(require("mongoose"));
-const logger_1 = __importDefault(require("../utils/logger"));
 const utils_1 = require("../utils/utils");
 class Phil extends discord_js_1.Client {
     commands = new discord_js_1.Collection();
@@ -43,24 +38,26 @@ class Phil extends discord_js_1.Client {
             },
         });
         this.init();
-        this.database();
+        //this.database();
     }
     async init() {
         this.login(process.env.DISCORD_TOKEN);
         this.handler();
     }
-    async database() {
-        mongoose_1.default
-            .connect(process.env.DATABASE_URL, {
-            dbName: "phil-bot",
-        })
-            .then(() => {
-            (0, logger_1.default)("Connected to database").info();
-        })
-            .catch((err) => {
-            (0, logger_1.default)("Failed to connect to the database").error(true);
-        });
-    }
+    /*
+  public async database() {
+    mongoose
+      .connect(process.env.DATABASE_URL, {
+        dbName: "phil-bot",
+      })
+      .then(() => {
+        logger("Connected to database").info();
+      })
+      .catch((err) => {
+        logger("Failed to connect to the database").error(true);
+      });
+  }
+*/
     async handler() {
         const commands = await (0, utils_1.globPromise)(`${__dirname}/../commands/**/**/mod{.js,.ts}`);
         const events = await (0, utils_1.globPromise)(`${__dirname}/../events/**/*{.ts,.js}`);

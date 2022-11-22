@@ -5,11 +5,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const Command_1 = __importDefault(require("../../../structures/Command"));
 exports.default = new Command_1.default({
-    name: "ping",
+    name: 'ping',
     main: async ({ ctx, args, client }) => {
         let then = Date.now();
         return ctx.reply({
-            content: `Pong! \`${client.ws.ping}\`ms`
+            content: `Pong! \`${client.ws.ping}\`ms`,
         });
     },
 });
