@@ -3,8 +3,38 @@ import { CONFIG } from '../../constants'
 import Event from '../../structures/Event'
 import { permissionHandler } from '../../utils/utils'
 
+import { createClient } from '@supabase/supabase-js'
+
+const supabase = createClient(
+    process.env['Supabase_URL'], 
+    process.env['Supabase_Service_Role']
+);
+
 export default new Event('messageCreate', async (message) => {
     if (!message.author || !message.guild || message.author.bot) return
+
+    if (message.channelId === '1044384359110676531') {
+        const { error } = await supabase
+            .from('scrapbook')
+            .insert({
+                author: message.author.id,
+                author_avatar: message.author.displayAvatarURL(),
+                author_name: message.author.username,
+                content: message.content,
+                media: message.attachments.map(a => a.url)
+            })
+            
+        if (error) return message.reply("```" + error.message + "```");
+
+        if (!message.hasThread) {
+            message.startThread({
+                name: message?.cleanContent || message.author.username,
+                autoArchiveDuration: 10080,
+                reason: 'Scrapbook'
+            })
+        }
+    }
+
     const data = CONFIG
     if (!message.content.toLowerCase().startsWith(data.prefix)) return
     const [command_name, ...args] = message.content
