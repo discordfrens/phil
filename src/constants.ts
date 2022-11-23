@@ -32,7 +32,20 @@ export const COLORS = {
         blue: resolveColor('#3772ff'),
     },
 }
+
 export const ruleBanner = `https://cdn.discordapp.com/attachments/1039957808247996448/1044704912996565022/Rules.png`
+export const EMOJIS = {
+    "badge_party": "<:badge_party:1045012510916493312>",
+    "badge_url": "<:badge_url:1045012620408799273>",
+    "badge_message": "<:badge_message:1045012577870155789>",
+    "badge_failed": "<:badge_failed:1045013315828596746>",
+    "badge_success": "<:badge_success:1045013292281757798>",
+    "badge_discord_blue": "<:badge_discord_blue:1045009705761783868>",
+    "badge_bot": "<:badge_bot:1045009731451887687>",
+    "badge_partner": "<:badge_partner:1045022901197357157>",
+    "invisable": "ㅤ"
+}
+
 export const CONFIG: Config = {
     server_id: '901881139004862554',
     prefix: '>',
@@ -40,7 +53,7 @@ export const CONFIG: Config = {
         muted: '1044748632399806534',
     },
     channels: {
-        logs: '',
+        logs: '1045012977532801084',
         roles: '1044393639373180989',
         welcome: '1044393639373180989',
         rules: '1044393639373180989',
@@ -67,11 +80,13 @@ export const CONFIG: Config = {
         },
         {
             group: 'Region',
+            max: 1,
             color: COLORS.all.purple,
             banner: `https://cdn.discordapp.com/attachments/1039957808247996448/1044656624104644618/Regions.png`,
             roles: [
                 { id: '1044410387682045982', name: 'North America' },
-                { id: '1044410405344260167', name: 'Blurple' },
+                { id: '1044410405344260167', name: 'South America' },
+                { id: "1045078712305070152", name: "Europe"},
                 { id: '1044410423677550632', name: 'Asia' },
                 { id: '1044410436751212664', name: 'Africa' },
                 { id: '1044410447077584927', name: 'Antartica' },

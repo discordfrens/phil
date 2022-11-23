@@ -60,7 +60,7 @@ export const sendEmbeds = (ctx: Message) => {
                                       placeholder:
                                           'Select one of the following...',
                                       min_values: 0,
-                                      max_values: z.roles.length,
+                                      max_values: z.max || z.roles.length,
                                       options: z.roles.map((r) => {
                                           const o = {
                                               label: r.name,

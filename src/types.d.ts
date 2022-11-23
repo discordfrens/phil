@@ -25,6 +25,7 @@ export type Config = {
     }
     reaction_roles: {
         group: string
+        max?: number
         banner: string
         color: number
         roles: ReactionRole[]
@@ -102,6 +103,22 @@ export type ScrapBookPostMedia = {
     size: number
     width: number
 }
+
+export type SupabaseUserTable = {
+    id: number;
+    created_at: Date;
+    infractions: any[];
+    user_id: string;
+}
+export type Infraction = {
+    type: "mute" | "warn" | "ban" | "kick" | "unmute" | "unban";
+    id: string;
+    reason: string;
+    timestamp: number;
+    moderatorId: string;
+    messageUrl: string;
+}
+
 declare global {
     namespace NodeJS {
         interface ProcessEnv {

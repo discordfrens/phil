@@ -1,8 +1,6 @@
 import {
-    APIEmbedFooter,
     EmbedBuilder,
     EmbedData,
-    resolveColor,
 } from 'discord.js'
 import { COLORS } from '../constants'
 
