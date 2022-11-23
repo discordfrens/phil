@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionType } from 'discord.js'
+import { ApplicationCommandOptionType, PermissionFlagsBits } from 'discord.js'
 import { EMOJIS } from '../../constants'
 import PhilEmbed from '../../structures/Embed'
 import SlashCommand from '../../structures/SlashCommand'
@@ -17,6 +17,7 @@ export default new SlashCommand({
                     name: 'mention',
                     type: ApplicationCommandOptionType.User,
                     description: 'A mentioned user',
+                    required: true
                 },
             ],
         },
@@ -30,9 +31,9 @@ export default new SlashCommand({
         const subCommand = props.args.getSubcommand().toLowerCase()
         switch (subCommand) {
             case 'user':
-                user(props)
+                return user(props)
             case 'server':
-                server(props)
+                return server(props)
         }
     },
 })

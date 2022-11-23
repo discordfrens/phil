@@ -107,7 +107,7 @@ export type ScrapBookPostMedia = {
 export type SupabaseUserTable = {
     id: number;
     created_at: Date;
-    infractions: any[];
+    infractions: Infraction[];
     user_id: string;
 }
 export type Infraction = {
@@ -116,7 +116,6 @@ export type Infraction = {
     reason: string;
     timestamp: number;
     moderatorId: string;
-    messageUrl: string;
 }
 
 declare global {

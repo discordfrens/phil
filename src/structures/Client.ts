@@ -1,7 +1,9 @@
 import {
+    ApplicationCommandPermissionType,
     Client,
     ClientEvents,
     Collection,
+    EditApplicationCommandPermissionsMixin,
 } from 'discord.js'
 import { CONFIG, INTENTS, logEmbed, PARTIALS } from '../constants'
 import { CommandProperties, Config, SlashCommandOptions } from '../types'
@@ -50,7 +52,7 @@ export default class Phil extends Client {
         const commands = await globPromise(`${__dirname}/../commands/**/**/mod{.js,.ts}`)
         const slashCommands = await globPromise(`${__dirname}/../slashCommands/**/*{.js,.ts}`)
         const events = await globPromise(`${__dirname}/../events/**/*{.ts,.js}`)
-        const rawSlashCommands = []
+        const rawSlashCommands: SlashCommandOptions[] = []
         commands.forEach(async (filePath) => {
             const file: CommandProperties = await (
                 await import(filePath)
@@ -62,6 +64,8 @@ export default class Phil extends Client {
             const sc: SlashCommandOptions = await (await import(filePath))?.default;
             if(!sc || !sc.name) return;
             this.slashCommands.set(sc.name, sc)
+            if(sc.userPermissions) sc.dmPermission = false
+
             rawSlashCommands.push(sc)
         })
         this.on("ready", () => {

@@ -43,7 +43,8 @@ export const EMOJIS = {
     "badge_discord_blue": "<:badge_discord_blue:1045009705761783868>",
     "badge_bot": "<:badge_bot:1045009731451887687>",
     "badge_partner": "<:badge_partner:1045022901197357157>",
-    "invisable": "ㅤ"
+    "invisable": "ㅤ",
+    "cat_wave": "<a:cat_hello:1044701932142473227>"
 }
 
 export const CONFIG: Config = {

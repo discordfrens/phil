@@ -1,5 +1,5 @@
 import { TextChannel } from 'discord.js'
-import { CONFIG } from '../../constants'
+import { CONFIG, EMOJIS } from '../../constants'
 import Event from '../../structures/Event'
 
 export default new Event('guildMemberAdd', (member) => {
@@ -10,6 +10,6 @@ export default new Event('guildMemberAdd', (member) => {
     ) as TextChannel
     if (!channel) return
     channel.send({
-        content: `Welcome <@${member.id}>! `,
+        content: `${EMOJIS.cat_wave} Welcome <@${member.id}>!`,
     })
 })
