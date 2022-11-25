@@ -25,28 +25,12 @@ export default class Phil extends Client {
             },
         })
         this.init()
-        //this.database();
     }
 
     public async init() {
         this.login(process.env.DISCORD_TOKEN)
         this.handler()
     }
-
-    /*
-  public async database() {
-    mongoose
-      .connect(process.env.DATABASE_URL, {
-        dbName: "phil-bot",
-      })
-      .then(() => {
-        logger("Connected to database").info();
-      })
-      .catch((err) => {
-        logger("Failed to connect to the database").error(true);
-      });
-  }
-*/
 
     public async handler() {
         const commands = await globPromise(`${__dirname}/../commands/**/**/mod{.js,.ts}`)

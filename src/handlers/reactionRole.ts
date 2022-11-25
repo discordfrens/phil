@@ -35,7 +35,7 @@ export const sendEmbeds = (ctx: Message) => {
             components: [
                 new ActionRowBuilder<ButtonBuilder | SelectMenuBuilder>({
                     components:
-                        z.roles.length < 5
+                        z.roles.length < 5 && (!z.select || false)
                             ? z.roles.map((r) => {
                                   const obj = {
                                       label: r.name,

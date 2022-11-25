@@ -30,6 +30,7 @@ export const COLORS = {
         purple: resolveColor('#7d53de'),
         pink: resolveColor('#ef709d'),
         blue: resolveColor('#3772ff'),
+        green: resolveColor("#89E5B3")
     },
 }
 
@@ -44,7 +45,8 @@ export const EMOJIS = {
     "badge_bot": "<:badge_bot:1045009731451887687>",
     "badge_partner": "<:badge_partner:1045022901197357157>",
     "invisable": "ㅤ",
-    "cat_wave": "<a:cat_hello:1044701932142473227>"
+    "cat_wave": "<a:cat_hello:1044701932142473227>",
+    "badge_booster": "<:badge_booster:1045009670231838850>"
 }
 
 export const CONFIG: Config = {
@@ -52,6 +54,7 @@ export const CONFIG: Config = {
     prefix: '>',
     roles: {
         muted: '1044748632399806534',
+        booster: "1044381719761014785"
     },
     channels: {
         logs: '1045012977532801084',
@@ -63,6 +66,7 @@ export const CONFIG: Config = {
     reaction_roles: [
         {
             group: 'Colours',
+            max: 1,
             color: COLORS.all.pink,
             banner: `https://cdn.discordapp.com/attachments/1039957808247996448/1044657003949215794/Colours.png`,
             roles: [
@@ -80,6 +84,23 @@ export const CONFIG: Config = {
             ],
         },
         {
+            group: 'Pronouns',
+            select: true,
+            color: COLORS.all.green,
+            banner: `https://cdn.discordapp.com/attachments/1039957808247996448/1045777295241130034/Pronouns.png`,
+            roles: [
+                {
+                    emoji: '<:he_him:1045779526329843762>',
+                    id: '1045776628892053685',
+                    name: 'he/him',
+                },
+                { emoji: '<:she_her:1045779527667822662> ', id: '1045776580607217726', name: 'she/her' },
+                { emoji: '<:they_them:1045779529127428177> ', id: '1045776645325340702', name: 'they/them' },
+                { emoji: '❗', id: '1045776657841143838', name: 'ask me' },
+
+            ],
+        },
+        {
             group: 'Region',
             max: 1,
             color: COLORS.all.purple,
@@ -92,6 +113,16 @@ export const CONFIG: Config = {
                 { id: '1044410436751212664', name: 'Africa' },
                 { id: '1044410447077584927', name: 'Antartica' },
                 { id: '1044410464563642379', name: 'Oceanic ( Austrilia )' },
+            ],
+        },
+        {
+            group: 'Pings',
+            select: true,
+            color: COLORS.all.blue,
+            banner: `https://cdn.discordapp.com/attachments/1039957808247996448/1045777531346882610/Pings.png`,
+            roles: [
+                { id: '1045776532402081916', name: 'Announcements' },
+                { id: '1045776527855456307', name: 'Events' },
             ],
         },
     ],

@@ -15,6 +15,7 @@ export type Config = {
     prefix: string
     roles: {
         muted: string;
+        booster: string;
     }
     channels: {
         logs: string
@@ -28,6 +29,7 @@ export type Config = {
         max?: number
         banner: string
         color: number
+        select?: boolean
         roles: ReactionRole[]
     }[]
 }
@@ -110,12 +112,14 @@ export type SupabaseUserTable = {
     infractions: Infraction[];
     user_id: string;
 }
+
 export type Infraction = {
     type: "mute" | "warn" | "ban" | "kick" | "unmute" | "unban";
     id: string;
     reason: string;
     timestamp: number;
     moderatorId: string;
+    length?: number
 }
 
 declare global {
