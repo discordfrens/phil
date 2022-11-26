@@ -7,8 +7,8 @@ export default new Command({
     category: 'admin',
     description: `Send out the general embeds! :nerd:`,
     main: (props) => {
-      // ruleEmbeds(props.ctx)
+        ruleEmbeds(props.ctx)
         ticketEmbed(props.ctx)
-        //props.client.commands.get("rr").main(props)
+        props.client.commands.get("rr").main(props)
     },
 })
