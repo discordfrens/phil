@@ -45,8 +45,8 @@ export default class Phil extends Client {
             const sc: SlashCommandOptions = await (await import(filePath))?.default;
             if(!sc || !sc.name) return;
             this.slashCommands.set(sc.name, sc)
+            if(sc.userPermissions) sc.dmPermission = false
             logger(`Loaded: ${sc.name}`).info()
-
             rawSlashCommands.push(sc)
         })
         this.on("ready", () => {
