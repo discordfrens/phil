@@ -1,18 +1,17 @@
-import { ActionRow, ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, channelLink, ChannelType, GuildMember, Message, TextChannel } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, channelLink, ChannelType, GuildMember, Message, TextChannel } from "discord.js";
 import { CONFIG, EMOJIS } from "../constants";
 import PhilEmbed from "../structures/Embed";
 import { Ticket, SlashCommandArguments } from "../types";
-import logger from "../utils/logger";
 import { supabase } from "../utils/providers";
-import { id } from "../utils/utils";
 
 export const handleButton = async (int: ButtonInteraction) => {
   const { data, error } = await supabase.from("tickets").select("*").eq("user", `${int.user.id}`)
+  const { count } = await supabase.from("tickets").select("*", { count: 'exact', head: true })
   if(error) return int.reply({ ephemeral: true, content: `${EMOJIS.badge_failed} Failed to see if you have an already existing ticket.`})
   const content = data ? data[0] as Ticket : null
   if(data && data.length > 0 || content) return int.reply({ ephemeral: true, content: `${EMOJIS.badge_failed} It appears that you already have an existing ticket. <#${content.channel_id}>`})
   const channel = await int.guild.channels.create({
-    name: `${id(10).slice(0, 32)}`,
+    name: `ticket-${(count + 1) || "BLANK"}`,
     type: ChannelType.GuildText,
     reason: `Ticket opened`,
     permissionOverwrites: [
@@ -61,11 +60,17 @@ export const handleButton = async (int: ButtonInteraction) => {
 }
 
 export const close_ticket = async (int: ButtonInteraction) => {
-  if(!(int.member as GuildMember).permissions.has("ManageChannels")) return int.reply({ ephemeral: true, content: `${EMOJIS.badge_failed} You are missing the required permissions to interaction with this button.`})
+  if(!(int.member as GuildMember).permissions.has("ManageChannels")) return int.reply({ ephemeral: true, embeds: [new PhilEmbed({
+    description: `${EMOJIS.badge_failed} You are missing the required permissions to interaction with this button.`
+  })]})
   const { data, error } = await supabase.from("tickets").select("*").eq("channel_id", int.channel.id)
-  if(error) return int.reply({ ephemeral: true, content: `${EMOJIS.badge_failed} Failed to locate currently existing tickets.`})
+  if(error) return int.reply({ ephemeral: true, embeds: [new PhilEmbed({
+    description: `${EMOJIS.badge_failed} Failed to locate currently existing tickets.`
+  })]})
   const content = data ? data[0] as Ticket : null
-  if(!data && data.length < 0 || !content) return int.reply({ ephemeral: true, content: `${EMOJIS.badge_failed} It appears that this is not a ticket channel?`})
+  if(!data && data.length < 0 || !content) return int.reply({ ephemeral: true, embeds: [new PhilEmbed({
+    description: `${EMOJIS.badge_failed} It appears that this is not a ticket channel?`
+  })]})
   int.channel.delete(`Closing ticket - ${content.channel_id}`).catch(() => {
     return int.reply({ ephemeral: true, content: `${EMOJIS.badge_failed} Failed to delete ticket channel.`})
   })

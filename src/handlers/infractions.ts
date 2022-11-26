@@ -1,6 +1,7 @@
 import { CONFIG, EMOJIS } from '../constants'
 import PhilEmbed from '../structures/Embed'
 import { Infraction, SlashCommandArguments, SupabaseUserTable } from '../types'
+import { pagination } from '../utils/collectors'
 import ms, { StringValue } from '../utils/ms'
 import { supabase } from '../utils/providers'
 import { id } from '../utils/utils'
@@ -20,11 +21,13 @@ export const warn = async ({ args, client, ctx }: SlashCommandArguments) => {
         })
     const { error } = await supabase.from('infractions').insert({
         type: 'warn',
-        inf_id: id(),
+        inf_id: id(10),
         reason: reason,
         timestamp: Date.now(),
         moderatorId: ctx.member.id,
         user_id: userMention.id,
+        moderator_name: ctx.member.user.username,
+        moderator_avatar: ctx.member.user.avatarURL() || "https://source.boringavatars.com/"
     })
     if (error)
         return ctx.reply({
@@ -51,6 +54,61 @@ export const warn = async ({ args, client, ctx }: SlashCommandArguments) => {
         embeds: [
             new PhilEmbed({
                 description: `${EMOJIS.badge_success} Successfully warning **${userMention.tag}** (\`${userMention.id}\`).`,
+            }),
+        ],
+    })
+}
+
+export const delete_warn = async ({
+    args,
+    client,
+    ctx,
+}: SlashCommandArguments) => {
+    const id = args.getString('id')
+    const reason = args.getString('reason') || 'No reason provided'
+    const { data, error } = await supabase
+        .from('infractions')
+        .select('*')
+        .eq('inf_id', id)
+        .eq('type', 'warn')
+    if (error)
+        return ctx.reply({
+            ephemeral: true,
+            embeds: [
+                new PhilEmbed({
+                    description: `${EMOJIS.badge_failed} Failed to locate existing infraction.`,
+                }),
+            ],
+        })
+    const inf = data && data.length > 0 ? data[0] : null
+    if (!inf)
+        return ctx.reply({
+            ephemeral: true,
+            embeds: [
+                new PhilEmbed({
+                    description: `${EMOJIS.badge_failed} Failed to locate a warning with the id of \`${id}\`.`,
+                }),
+            ],
+        })
+    const { error: err } = await supabase
+        .from('infractions')
+        .delete()
+        .eq('inf_id', inf.inf_id)
+    if (err)
+        return ctx.reply({
+            ephemeral: true,
+            embeds: [
+                new PhilEmbed({
+                    description: `${EMOJIS.badge_failed} Failed to delete saved warning.`,
+                }),
+            ],
+        })
+
+    return ctx.reply({
+        ephemeral: true,
+        embeds: [
+            new PhilEmbed({
+                description: `${EMOJIS.badge_success} Successfully deleted warning \`${inf.inf_id}\`.`,
             }),
         ],
     })
@@ -110,6 +168,8 @@ export const mute = async ({ args, client, ctx }: SlashCommandArguments) => {
         moderatorId: ctx.member.id,
         user_id: userMention.id,
         length: length,
+        moderator_name: ctx.member.user.username,
+        moderator_avatar: ctx.member.user.avatarURL() || "https://source.boringavatars.com/"
     })
     if (error)
         return ctx.reply({
@@ -214,6 +274,8 @@ export const unmuted = async ({ args, client, ctx }: SlashCommandArguments) => {
         timestamp: Date.now(),
         moderatorId: ctx.member.id,
         user_id: userMention.id,
+        moderator_name: ctx.member.user.username,
+        moderator_avatar: ctx.member.user.avatarURL() || "https://source.boringavatars.com/"
     })
     if (error)
         return ctx.reply({
@@ -302,6 +364,8 @@ export const ban = async ({ args, client, ctx }: SlashCommandArguments) => {
         timestamp: Date.now(),
         moderatorId: ctx.member.id,
         user_id: userMention.id,
+        moderator_name: ctx.member.user.username,
+        moderator_avatar: ctx.member.user.avatarURL() || "https://source.boringavatars.com/"
     })
     if (error)
         return ctx.reply({
@@ -365,6 +429,8 @@ export const unban = async ({ args, client, ctx }: SlashCommandArguments) => {
         timestamp: Date.now(),
         moderatorId: ctx.member.id,
         user_id: userId,
+        moderator_name: ctx.member.user.username,
+        moderator_avatar: ctx.member.user.avatarURL() || "https://source.boringavatars.com/"
     })
     if (error)
         return ctx.reply({
@@ -383,4 +449,29 @@ export const unban = async ({ args, client, ctx }: SlashCommandArguments) => {
             }),
         ],
     })
+}
+
+export const cases = async({ args, client, ctx }: SlashCommandArguments) => {
+    const userMention = ctx.guild.members.cache.find(
+        (f) => f.id === args.getUser('member').id
+    )
+    if(!userMention)  return ctx.reply({
+        ephemeral: true,
+        embeds: [
+            new PhilEmbed({
+                description: `${EMOJIS.badge_failed} Please mention a member.`,
+            }),
+        ],
+    })
+    const { data, error } = await supabase.from("infractions").select("*").eq("user_id", userMention.id);
+    if(error) return ctx.reply({
+        ephemeral: true,
+        embeds: [
+            new PhilEmbed({
+                description: `${EMOJIS.badge_failed} Failed to locate infractions for **${userMention.user.tag}**.`,
+            }),
+        ],
+    })
+    const d = data.map((z) => `\`${z.type.toUpperCase()}\` <t:${Math.floor(z.timestamp /1000)}:F> \`${z.inf_id}\`\n${z.reason}\n`)
+    pagination(d, ctx, `${userMention.user.tag}'s Warnings`, userMention.user.avatarURL())
 }

@@ -1,15 +1,15 @@
 import {
-    ApplicationCommandPermissionType,
+    APIEmbed,
     Client,
     ClientEvents,
     Collection,
-    EditApplicationCommandPermissionsMixin,
+    TextChannel,
 } from 'discord.js'
-import { CONFIG, INTENTS, logEmbed, PARTIALS } from '../constants'
+import { CONFIG, INTENTS, PARTIALS } from '../constants'
 import { CommandProperties, Config, SlashCommandOptions } from '../types'
-import mongoose from 'mongoose'
 import logger from '../utils/logger'
 import { globPromise } from '../utils/utils'
+import PhilEmbed from './Embed'
 import Event from './Event'
 
 export default class Phil extends Client {
@@ -20,9 +20,6 @@ export default class Phil extends Client {
         super({
             intents: INTENTS,
             partials: PARTIALS,
-            allowedMentions: {
-                repliedUser: false,
-            },
         })
         this.init()
     }
@@ -30,6 +27,14 @@ export default class Phil extends Client {
     public async init() {
         this.login(process.env.DISCORD_TOKEN)
         this.handler()
+    }
+
+    public async sendLog(data: APIEmbed) {
+        const logChannel = this.channels.cache.find(f => f.id === CONFIG.channels.logs) as TextChannel
+        if(!logChannel) return
+        logChannel.send({
+            embeds: [new PhilEmbed(data)]
+        })
     }
 
     public async handler() {
