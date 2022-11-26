@@ -16,6 +16,8 @@ export type Config = {
     roles: {
         muted: string;
         booster: string;
+        discord_blue: string;
+        moderator: string;
     }
     channels: {
         logs: string
@@ -23,6 +25,8 @@ export type Config = {
         welcome: string
         rules: string
         scrapbook: string
+        open_source: string
+        tickets: string
     }
     reaction_roles: {
         group: string
@@ -122,6 +126,14 @@ export type Infraction = {
     length?: number
 }
 
+
+export type Ticket = {
+    timestamp: number;
+    user_id: string;
+    channel_id: string;
+    locked: boolean;
+    members: string[]
+}
 declare global {
     namespace NodeJS {
         interface ProcessEnv {

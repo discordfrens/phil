@@ -1,5 +1,5 @@
 import Command from '../../../structures/Command'
-import { ruleEmbeds } from '../../../handlers/embeds'
+import { ruleEmbeds, ticketEmbed } from '../../../handlers/embeds'
 
 export default new Command({
     name: 'embeds',
@@ -7,7 +7,8 @@ export default new Command({
     category: 'admin',
     description: `Send out the general embeds! :nerd:`,
     main: (props) => {
-        ruleEmbeds(props.ctx)
-        props.client.commands.get("rr").main(props)
+      // ruleEmbeds(props.ctx)
+        ticketEmbed(props.ctx)
+        //props.client.commands.get("rr").main(props)
     },
 })

@@ -2,7 +2,6 @@ import { promisify } from 'util'
 import glob from 'glob'
 import { Guild, GuildMember, Message, PermissionResolvable } from 'discord.js'
 import { client } from '..'
-import User from '../models/User'
 
 export const globPromise = async (filePath: string): Promise<string[]> => {
     const gp = promisify(glob)
@@ -56,17 +55,6 @@ export const getUser = (userId: string, ctx: Message) => {
     )
 }
 
-export const getUserData = async (userId: string, guildId: string) => {
-    let data = await User.findOne({ userId, guildId })
-    if (!data) {
-        await User.create({
-            userId: userId,
-            guildId: guildId,
-        })
-        data = await User.findOne({ userId, guildId })
-    }
-    return data
-}
 
 export const id = (length: number = 35) => {
     let str = ''

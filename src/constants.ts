@@ -51,10 +51,12 @@ export const EMOJIS = {
 
 export const CONFIG: Config = {
     server_id: '901881139004862554',
-    prefix: '>',
+    prefix: '.',
     roles: {
         muted: '1044748632399806534',
-        booster: "1044381719761014785"
+        booster: "1044381719761014785",
+        discord_blue: "1044384163635154996",
+        moderator: "902503734783922206"
     },
     channels: {
         logs: '1045012977532801084',
@@ -62,10 +64,12 @@ export const CONFIG: Config = {
         welcome: '1044393639373180989',
         rules: '1044393639373180989',
         scrapbook: '1044678272434319400',
+        open_source: "1044651403936800818",
+        tickets: "1044393639373180989"
     },
     reaction_roles: [
         {
-            group: 'Colours',
+            group: '🎨 Colours',
             max: 1,
             color: COLORS.all.pink,
             banner: `https://cdn.discordapp.com/attachments/1039957808247996448/1044657003949215794/Colours.png`,
@@ -84,7 +88,7 @@ export const CONFIG: Config = {
             ],
         },
         {
-            group: 'Pronouns',
+            group: '❓ Pronouns',
             select: true,
             color: COLORS.all.green,
             banner: `https://cdn.discordapp.com/attachments/1039957808247996448/1045777295241130034/Pronouns.png`,
@@ -101,7 +105,7 @@ export const CONFIG: Config = {
             ],
         },
         {
-            group: 'Region',
+            group: '🌍 Region',
             max: 1,
             color: COLORS.all.purple,
             banner: `https://cdn.discordapp.com/attachments/1039957808247996448/1044656624104644618/Regions.png`,
@@ -116,7 +120,7 @@ export const CONFIG: Config = {
             ],
         },
         {
-            group: 'Pings',
+            group: '❗ Pings',
             select: true,
             color: COLORS.all.blue,
             banner: `https://cdn.discordapp.com/attachments/1039957808247996448/1045777531346882610/Pings.png`,
@@ -130,7 +134,7 @@ export const CONFIG: Config = {
 
 export const Rules = [
     'Keep all content (messages, images, videos etc) SFW',
-    'English only',
+    'English only, if you do not know english then please use a translator.',
     'Hate Speach, Harrassment, Discrimination is prohibited',
     'Use common sense',
     'No discussions of politics, religions, self harm, gore, suggestions of death or torture, or any controversial topics',

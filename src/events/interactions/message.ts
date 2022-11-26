@@ -1,16 +1,17 @@
 import { client } from '../..'
 import { CONFIG } from '../../constants'
 import { antiLink } from '../../handlers/automod'
+import { auto_w } from '../../handlers/misc'
 import scrapbook from '../../handlers/scrapbook'
+import { open_source } from '../../handlers/threaders'
 import Event from '../../structures/Event'
 import { permissionHandler } from '../../utils/utils'
 
 export default new Event('messageCreate', async (message) => {
     if (!message.author || !message.guild || message.author.bot) return
     antiLink(message)
-    if(message.content.split(" ").includes("W")) {
-        message.react("<:wkey:1044742922773471262>")
-    }
+    open_source(message)
+    auto_w(message)
     scrapbook(message)
     const data = CONFIG
     if (!message.content.toLowerCase().startsWith(data.prefix)) return
