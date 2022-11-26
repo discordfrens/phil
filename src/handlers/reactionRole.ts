@@ -120,7 +120,9 @@ export const handleInteraction = (ctx: Interaction) => {
         const guild = client.guilds.cache.find((f) => f.id === CONFIG.server_id)
         if (!guild) return
         const rr = CONFIG.reaction_roles.find(
-            (f) => f.group.toLowerCase() === ctx.customId
+            (f) => f.group.toLowerCase()
+            .split(' ')
+            .join('-') === ctx.customId
         )
         if (!rr) return
         const member = guild.members.cache.find((f) => f.id === ctx.user.id)
