@@ -16,7 +16,7 @@ export const ruleEmbeds = (ctx: Message) => {
       style: ButtonStyle.Link
     }), new ButtonBuilder({ 
       url: "https://learn.discordfrens.com",
-      label: "Resoures",
+      label: "Resources",
       emoji: "📑",
       style: ButtonStyle.Link
     }), new ButtonBuilder({ 
