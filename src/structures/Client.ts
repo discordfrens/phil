@@ -29,14 +29,6 @@ export default class Phil extends Client {
         this.handler()
     }
 
-    public async sendLog(data: APIEmbed) {
-        const logChannel = this.channels.cache.find(f => f.id === CONFIG.channels.logs) as TextChannel
-        if(!logChannel) return
-        logChannel.send({
-            embeds: [new PhilEmbed(data)]
-        })
-    }
-
     public async handler() {
         const commands = await globPromise(`${__dirname}/../commands/**/**/mod{.js,.ts}`)
         const slashCommands = await globPromise(`${__dirname}/../slashCommands/**/*{.js,.ts}`)
