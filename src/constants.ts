@@ -83,8 +83,6 @@ export const CONFIG: Config = {
                 { emoji: '🍉', id: '1044402773380313119', name: 'Melon Green' },
                 { emoji: '⭐', id: '1044402820843053116', name: 'Star Yellow' },
                 { emoji: '🩸', id: '1044402856821792873', name: 'Blood Red' },
-                { emoji: '🥛', id: '1044402902359343146', name: 'Milk White' },
-                { emoji: '🛰️', id: '1044402934970060881', name: 'Space Black' },
             ],
         },
         {
