@@ -9,7 +9,7 @@ import { permissionHandler } from '../../utils/utils'
 
 export default new Event('messageCreate', async (message) => {
     if (!message.author || !message.guild || message.author.bot) return
-    antiLink(message)
+   // antiLink(message)
     open_source(message)
     auto_w(message)
     scrapbook(message)
